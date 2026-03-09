@@ -1,5 +1,9 @@
 import parse from "html-react-parser";
 
+/*
+	Display element for individual replies to a thread, or replies to those replies, etc.
+*/
+
 interface Post {
 	readonly body_html: string
 }
