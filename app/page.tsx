@@ -7,7 +7,10 @@ const fetcher = (url) => fetch(url).then(res => res.json());
 
 export default function Home() {
   const { data, error, isLoading } = useSWR("http://www.reddit.com/r/pathofexile.json", fetcher);
-  if(error) return(<div>Failed to fetch post data</div>);
+  if(error) {
+    console.log(error);
+    return(<div>Failed to fetch post data</div>);
+  }
   if(isLoading) return(<div>Loading!</div>);
 
   return (
