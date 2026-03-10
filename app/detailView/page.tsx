@@ -12,11 +12,9 @@ import useSWR from "swr";
 */
 
 async function getPostDetails(params) {
-	console.log(params);
 	const postDetailStream = await fetch(`https://api.reddit.com/${params}.json`);
 	const postDetailsObject = await postDetailStream.json();
 	const postDetails = { mainPost: postDetailsObject[0].data.children[0].data, comments: postDetailsObject[1].data.children };
-	console.log(postDetails);
 	return postDetails;
 }
 
@@ -24,13 +22,14 @@ async function getPostDetails(params) {
 export default function Page() {
 	const searchParams = useSearchParams();
 	const link = searchParams.get("post");
-	const postDetails = useSWR(link, getPostDetails)
+	const { data, isLoading } = useSWR(link, getPostDetails)
+	if (isLoading || !data) return (<div>Loading!</div>);
 	return(
 		<div className="justify-items-center">
 			<main className="w-1/2">
-				<MainPost post={postDetails.mainPost}/>
+				<MainPost post={data.mainPost}/>
 				<span className="flex font-bold border-b-1">Comments</span>
-				<CommentsDisplay comments={postDetails.comments} />
+				<CommentsDisplay comments={data.comments} />
 			</main>
 		</div>
 	)
