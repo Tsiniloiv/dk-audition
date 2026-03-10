@@ -37,10 +37,6 @@ function PageContent() {
 
 //export default function Page({ searchParams }: {searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
 export default function Page() {
-	const searchParams = useSearchParams();
-	const link = searchParams.get("post");
-	const { data, isLoading } = useSWR(link, getPostDetails)
-	if (isLoading || !data) return (<div>Loading!</div>);
 	return(
 		<Suspense fallback={<div>Loading!</div>}>
 			<PageContent />
