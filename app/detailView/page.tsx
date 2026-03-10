@@ -19,6 +19,22 @@ async function getPostDetails(params) {
 	return postDetails;
 }
 
+function PageContent() {
+	const searchParams = useSearchParams();
+	const link = searchParams.get("post");
+	const { data, isLoading } = useSWR(link, getPostDetails)
+	if (isLoading || !data) return (<div>Loading!</div>);
+	return(
+		<div className="justify-items-center">
+			<main className="w-1/2">
+				<MainPost post={data.mainPost}/>
+				<span className="flex font-bold border-b-1">Comments</span>
+				<CommentsDisplay comments={data.comments} />
+			</main>
+		</div>
+	);
+}
+
 //export default function Page({ searchParams }: {searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
 export default function Page() {
 	const searchParams = useSearchParams();
@@ -27,13 +43,7 @@ export default function Page() {
 	if (isLoading || !data) return (<div>Loading!</div>);
 	return(
 		<Suspense fallback={<div>Loading!</div>}>
-			<div className="justify-items-center">
-				<main className="w-1/2">
-					<MainPost post={data.mainPost}/>
-					<span className="flex font-bold border-b-1">Comments</span>
-					<CommentsDisplay comments={data.comments} />
-				</main>
-			</div>
+			<PageContent />
 		</Suspense>
 	)
 }
