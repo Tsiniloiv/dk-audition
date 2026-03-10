@@ -1,4 +1,4 @@
-import Post from "./post.tsx"
+import Post from "./post"
 
 /*
 	Makes a list of Post elements with all the necessary data.
