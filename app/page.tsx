@@ -3,7 +3,7 @@
 import PostList from "./PostList";
 import useSWR from "swr";
 
-const fetcher = (url) => fetch(url).then(res => res.json());
+const fetcher = (url) => fetch(url, {mode: 'cors'}).then(res => res.json());
 
 export default function Home() {
   const { data, error, isLoading } = useSWR("http://www.reddit.com/r/pathofexile.json", fetcher);
