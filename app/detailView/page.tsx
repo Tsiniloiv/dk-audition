@@ -9,7 +9,7 @@ import CommentsDisplay from "./commentsDisplay"
 
 async function getPostDetails(params) {
 	const postLink = (await params).post;
-	const postDetailStream = await fetch(`https://www.reddit.com/${postLink}.json`);
+	const postDetailStream = await fetch(`https://api.reddit.com/${postLink}.json`);
 	const postDetailsObject = await postDetailStream.json();
 	const postDetails = { mainPost: postDetailsObject[0].data.children[0].data, comments: postDetailsObject[1].data.children };
 	return postDetails;
