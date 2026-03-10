@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   const subreddit = searchParams.get('path') ?? 'popular';
 
   const res = await fetch(
-    `https://www.reddit.com/${subreddit}.json`,
+    `https://www.reddit.com/r/${subreddit}.json`,
     {
       headers: {
         // Reddit requires a User-Agent for API calls

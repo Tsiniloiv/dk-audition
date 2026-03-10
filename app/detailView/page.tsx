@@ -13,7 +13,7 @@ import {Suspense} from "react";
 */
 
 async function getPostDetails(params) {
-	const postDetailStream = await fetch(`/api/reddit?path=${params}`);
+	const postDetailStream = await fetch(`https://api.reddit.com/${params}.json`);
 	const postDetailsObject = await postDetailStream.json();
 	const postDetails = { mainPost: postDetailsObject[0].data.children[0].data, comments: postDetailsObject[1].data.children };
 	return postDetails;
