@@ -1,5 +1,9 @@
+"use client"
+
 import MainPost from "./mainPost";
-import CommentsDisplay from "./commentsDisplay"
+import CommentsDisplay from "./commentsDisplay";
+import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 /* 
 	Display post body and responses.
@@ -8,15 +12,19 @@ import CommentsDisplay from "./commentsDisplay"
 */
 
 async function getPostDetails(params) {
-	const postLink = (await params).post;
-	const postDetailStream = await fetch(`https://api.reddit.com/${postLink}.json`);
+	console.log(params);
+	const postDetailStream = await fetch(`https://api.reddit.com/${params}.json`);
 	const postDetailsObject = await postDetailStream.json();
 	const postDetails = { mainPost: postDetailsObject[0].data.children[0].data, comments: postDetailsObject[1].data.children };
+	console.log(postDetails);
 	return postDetails;
 }
 
-export default async function Page({ searchParams }: {searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
-	const postDetails = await getPostDetails(searchParams);
+//export default function Page({ searchParams }: {searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
+export default function Page() {
+	const searchParams = useSearchParams();
+	const link = searchParams.get("post");
+	const postDetails = useSWR(link, getPostDetails)
 	return(
 		<div className="justify-items-center">
 			<main className="w-1/2">
