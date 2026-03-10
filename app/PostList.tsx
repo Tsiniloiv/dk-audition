@@ -1,4 +1,4 @@
-import Post from "./post"
+import Post from "./post.tsx"
 
 /*
 	Makes a list of Post elements with all the necessary data.
@@ -7,10 +7,10 @@ import Post from "./post"
 export default function PostList(props) {
 	const posts = props.posts.data.children;
 	return(
-		<div>
+		<ul>
 			{
-				posts.map((post, index) => (<Post key={index} data={post.data}/>))
+				posts.map((post, index) => (<li key={index}><Post data={post.data}/></li>))
 			}
-		</div>
+		</ul>
 	);
 }
